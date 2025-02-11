@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 class="text-center mb-4">Recommendations</h1>
+
+<!-- Display selected number of days -->
+{% if preferences %}
+    <p><strong>Number of Days:</strong> {{ preferences.num_days }}</p>
+{% endif %}
+
+{% if recommendations %}
+    <div class="row">
+        {% for destination in recommendations %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <!-- Display the first image of the destination -->
+                    {% if destination.images %}
+                        <img 
+                            src="{{ destination.images[1] }}" 
+                            class="card-img-top" 
+                            alt="{{ destination.name }} image">
+                    {% else %}
+                        <img 
+                            src="https://via.placeholder.com/300" 
+                            class="card-img-top" 
+                            alt="No image available">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ destination.name }}</h5>
+                        <form action="/feedback/{{ destination.name }}" method="post">
+                            <button type="submit" name="feedback" value="liked" class="btn btn-success">Like</button>
+                            <button type="submit" name="feedback" value="disliked" class="btn btn-danger">Dislike</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No matching destinations found.</p>
+{% endif %}
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+</div>
+{% endblock %}

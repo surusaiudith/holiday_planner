@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="weather-container">
+    {% if weather %}
+        <h2>Weather in {{ weather.name }}</h2>
+        <p><strong>Temperature:</strong> {{ weather.main.temp }}°C</p>
+        <p><strong>Description:</strong> {{ weather.weather[0].description | capitalize }}</p>
+        <p><strong>Humidity:</strong> {{ weather.main.humidity }}%</p>
+        <p><strong>Wind Speed:</strong> {{ weather.wind.speed }} m/s</p>
+    {% else %}
+        <p>Weather data is currently unavailable. Please try again later.</p>
+    {% endif %}
+</div>
+{% endblock %}
